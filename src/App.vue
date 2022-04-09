@@ -261,18 +261,8 @@ export default {
       return modList;
     });
 
-    // Calculează modulo din nou dar construiește și lista de 16 valori random din modulo (știu, conține un duplicat al celei de sus, dar nu mi-am dat seama cum să afișez lista de modulo fără să o stric)
+    // Construiește și lista de 16 valori random din modulo
     const findMod = computed(() => {
-      let mod = 0;
-      let intr = 0;
-      let l = finalList.length;
-      for (let i = 0; i < l; i++) {
-        intr = Math.trunc(finalList[i] / 26);
-        mod = finalList[i] - intr * 26;
-
-        // eslint-disable-next-line vue/no-side-effects-in-computed-properties
-        modList.push(abcList[mod]);
-      }
       if (modList.length > 0) {
         console.log(modList);
         return generateRandList.value;
