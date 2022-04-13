@@ -43,43 +43,23 @@ export default {
     var finalList = reactive([]);
     var modList = reactive([]);
     var randModList = reactive([]);
-    const abcList = [
-      "A",
-      "B",
-      "C",
-      "D",
-      "E",
-      "F",
-      "G",
-      "H",
-      "I",
-      "J",
-      "K",
-      "L",
-      "M",
-      "N",
-      "O",
-      "P",
-      "Q",
-      "R",
-      "S",
-      "T",
-      "U",
-      "V",
-      "W",
-      "X",
-      "Y",
-      "Z",
-    ];
+
+    var abcList = reactive([]);
+
+    function abc_list() {
+      for (let i = 65; i < 91; i++) {
+        // eslint-disable-next-line vue/no-side-effects-in-computed-properties
+        abcList.push(String.fromCharCode(i));
+      }
+    }
 
     // Functia inițială care este chemată la apăsarea butonului
     // Este menită să valideze formatul textului
-    // Apoi să spargă valorile în cifre de câte 3 numere pe care le pune într-o altă listă
-    // Dar înainte să facă asta, curăță variabilele care vor fi folosite mai târziu
-    const initList = computed(() => {
+    // Apoi să spargă valorile în cifre de câte 3 numere pe care le pune într-o listă validată
+    // Iar înainte să facă asta, curăță variabilele care vor fi folosite mai târziu în caz că lista inițială se schimbă
+    function initList() {
       categoryList = [0, 0, 0, 0, 0, 0, 0, 0, 0];
 
-      // Nu găsesc despre această eroare și fix-ul de la VSC îmi permite să o rulez. Presupun că e vorba despre ceva mai complicat
       // eslint-disable-next-line vue/no-side-effects-in-computed-properties
       cardList.value = cardList.value.map((card) => {
         return {
@@ -108,8 +88,7 @@ export default {
         if (
           (inputText.value[i] < 1 && j === 0) ||
           (isNaN(inputText.value[i]) === true && j < 3) ||
-          (j === 3 && inputText.value[i] != ",") ||
-          (j === 4 && inputText.value[i] != " ")
+          (j === 3 && inputText.value[i] != ",")
         ) {
           // eslint-disable-next-line vue/no-side-effects-in-computed-properties
           isValidList.value = false;
@@ -143,8 +122,6 @@ export default {
           // eslint-disable-next-line vue/no-side-effects-in-computed-properties
           isValidList.value = true;
         } else if (inputText.value[i] === "," && j === 3) {
-          j++;
-        } else if (inputText.value[i] === " " && j === 4) {
           j = 0;
         } else {
           // eslint-disable-next-line vue/no-side-effects-in-computed-properties
@@ -152,9 +129,9 @@ export default {
         }
       }
       return validList;
-    });
+    }
 
-    // Ajută la afișarea textului aferent validității și execută următoarea funcție necesară
+    // Ajută la afișarea textului aferent validității
     const validCheck = computed(() => {
       if (isValidList.value === false) {
         return "The list is not valid";
@@ -163,7 +140,7 @@ export default {
       }
     });
 
-    // Compară valorile din lista validă cu valorile din lista pe categorii, iar dacă găsește valori mai mari decât cele prezente în categoria aferentă, le înlocuiește
+    // Compară valorile din lista validată cu valorile din lista pe categorii, iar dacă găsește valori mai mari decât cele prezente în categoria aferentă, le înlocuiește
     const compareNumbers = computed(() => {
       let l = validList.length;
       for (let i = 0; i < l; i++) {
@@ -175,56 +152,56 @@ export default {
           // eslint-disable-next-line vue/no-side-effects-in-computed-properties
           categoryList[0] = validList[i];
         } else if (
-          validList[i] > 200 &&
+          validList[i] > 199 &&
           validList[i] < 300 &&
           categoryList[1] < validList[i]
         ) {
           // eslint-disable-next-line vue/no-side-effects-in-computed-properties
           categoryList[1] = validList[i];
         } else if (
-          validList[i] > 300 &&
+          validList[i] > 299 &&
           validList[i] < 400 &&
           categoryList[2] < validList[i]
         ) {
           // eslint-disable-next-line vue/no-side-effects-in-computed-properties
           categoryList[2] = validList[i];
         } else if (
-          validList[i] > 400 &&
+          validList[i] > 399 &&
           validList[i] < 500 &&
           categoryList[3] < validList[i]
         ) {
           // eslint-disable-next-line vue/no-side-effects-in-computed-properties
           categoryList[3] = validList[i];
         } else if (
-          validList[i] > 500 &&
+          validList[i] > 499 &&
           validList[i] < 600 &&
           categoryList[4] < validList[i]
         ) {
           // eslint-disable-next-line vue/no-side-effects-in-computed-properties
           categoryList[4] = validList[i];
         } else if (
-          validList[i] > 600 &&
+          validList[i] > 599 &&
           validList[i] < 700 &&
           categoryList[5] < validList[i]
         ) {
           // eslint-disable-next-line vue/no-side-effects-in-computed-properties
           categoryList[5] = validList[i];
         } else if (
-          validList[i] > 700 &&
+          validList[i] > 699 &&
           validList[i] < 800 &&
           categoryList[6] < validList[i]
         ) {
           // eslint-disable-next-line vue/no-side-effects-in-computed-properties
           categoryList[6] = validList[i];
         } else if (
-          validList[i] > 800 &&
+          validList[i] > 799 &&
           validList[i] < 900 &&
           categoryList[7] < validList[i]
         ) {
           // eslint-disable-next-line vue/no-side-effects-in-computed-properties
           categoryList[7] = validList[i];
         } else if (
-          validList[i] > 900 &&
+          validList[i] > 899 &&
           validList[i] < 1000 &&
           categoryList[8] < validList[i]
         ) {
@@ -235,7 +212,7 @@ export default {
       return categoryList;
     });
 
-    // Alcătuiește lista finală de maxime
+    // Lista finală de maxime
     const maxListBuilder = computed(() => {
       for (let i = 0; i < 9; i++) {
         if (compareNumbers.value[i] > 0) {
@@ -255,26 +232,23 @@ export default {
         intr = Math.trunc(finalList[i] / 26);
         mod = finalList[i] - intr * 26;
 
+        abc_list();
         // eslint-disable-next-line vue/no-side-effects-in-computed-properties
         modList.push(abcList[mod]);
       }
       return modList;
     });
 
-    // Construiește și lista de 16 valori random din modulo
+    // Construiește lista de 16 valori random din modulo
     const findMod = computed(() => {
       if (modList.length > 0) {
-        console.log(modList);
         return generateRandList.value;
       }
-      console.log(modList);
       return modList;
     });
 
-    // Are o componentă asemănătoare celei de mai sus dar, alocă și construiește cardurile
+    // Alocă și construiește cardurile
     const generateRandList = computed(() => {
-      console.log(randModList);
-
       let rand = 0;
       for (let i = 0; i < 16; i++) {
         rand = Math.floor(Math.random() * modList.length);
@@ -287,7 +261,6 @@ export default {
           position: i,
         });
       }
-      console.log(randModList);
       return randModList;
     });
 
